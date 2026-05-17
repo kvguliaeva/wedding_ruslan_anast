@@ -96,9 +96,9 @@
 
       .map-link {
         left: 6.5%;
-        top: 31.38%;
+        top: 31.89%;
         width: 87%;
-        height: 0.86%;
+        height: 0.42%;
       }
 
       .phone-link {
@@ -437,7 +437,7 @@
           <button class="hotspot scroll-down" type="button" data-scroll-down aria-label="Листать вниз">Листай вниз</button>
           <a
             class="hotspot map-link"
-            href="https://yandex.ru/maps/?um=constructor%3A0c40362726d73194475e91ea009a6b179242e265c2cbcdb0021d884e20515103"
+            href="https://yandex.ru/maps/org/net_na_karte/179466847244/?ll=50.593422%2C53.260503&z=12"
             target="_blank"
             rel="noopener"
             aria-label="Открыть место проведения на Яндекс Картах"
@@ -447,10 +447,10 @@
           </a>
           <a
             class="hotspot contact-link"
-            href="https://wa.me/79523209036"
+            href="https://t.me/ochkowinx"
             target="_blank"
             rel="noopener"
-            aria-label="Написать организатору в WhatsApp"
+            aria-label="Написать организатору в Telegram"
           >Связаться</a>
           <button class="hotspot rsvp-link" type="button" data-open-rsvp aria-label="Открыть анкету гостя">Подтвердить</button>
         </div>
@@ -489,7 +489,7 @@
           <div class="organizer" aria-label="Контакт организатора">
             <div class="organizer__name">Организатор</div>
             <a class="organizer__link" href="tel:+79523209036">+7 (952) 320-90-36</a>
-            <a class="organizer__link" href="https://wa.me/79523209036" target="_blank" rel="noopener">Связаться с организатором</a>
+            <a class="organizer__link" href="https://t.me/ochkowinx" target="_blank" rel="noopener">Связаться с организатором</a>
           </div>
         </form>
       </section>
@@ -502,7 +502,7 @@
       const scrollDownButton = document.querySelector("[data-scroll-down]");
       const form = document.querySelector("[data-rsvp-form]");
       const note = document.querySelector("[data-form-note]");
-      const organizerPhone = "79523209036";
+      const organizerTelegram = "ochkowinx";
       const weddingDate = new Date("2026-07-26T16:00:00+04:00");
       const countdownNodes = {
         days: document.querySelector("[data-countdown-days]"),
@@ -554,8 +554,8 @@
         const data = Object.fromEntries(new FormData(form));
         localStorage.setItem("wedding-rsvp", JSON.stringify({ ...data, sentAt: new Date().toISOString() }));
         const message = ["Анкета гостя", `Имя: ${data.name}`, `Присутствие: ${data.attendance}`].join("\n");
-        note.textContent = "Спасибо! Сейчас откроется WhatsApp для отправки ответа организатору.";
-        window.open(`https://wa.me/${organizerPhone}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+        note.textContent = "Спасибо! Сейчас откроется Telegram для отправки ответа организатору.";
+        window.open(`https://t.me/${organizerTelegram}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
         form.reset();
       });
 
