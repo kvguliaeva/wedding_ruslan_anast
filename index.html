@@ -247,10 +247,6 @@
         padding: 24px;
       }
 
-      .dialog--map {
-        width: min(100%, 540px);
-      }
-
       .dialog__top {
         display: flex;
         align-items: flex-start;
@@ -372,34 +368,6 @@
         text-decoration: none;
       }
 
-      .map-widget {
-        width: 100%;
-        min-height: 320px;
-        overflow: hidden;
-        border: 1px solid rgba(151, 43, 42, 0.35);
-        background: #f4efe8;
-      }
-
-      .map-widget iframe {
-        display: block;
-        width: 100% !important;
-        max-width: 100%;
-      }
-
-      .map-actions {
-        display: grid;
-        gap: 10px;
-        margin-top: 14px;
-        text-align: center;
-      }
-
-      .map-open {
-        color: var(--wine);
-        font-family: "Courier New", monospace;
-        font-size: 14px;
-        font-weight: 700;
-      }
-
       @media (max-width: 440px) {
         .page-shell {
           width: 100%;
@@ -467,12 +435,13 @@
         </div>
         <div class="hotspots" aria-hidden="false">
           <button class="hotspot scroll-down" type="button" data-scroll-down aria-label="Листать вниз">Листай вниз</button>
-          <button
+          <a
             class="hotspot map-link"
-            type="button"
-            data-open-map
+            href="https://yandex.ru/maps/?um=constructor%3A0c40362726d73194475e91ea009a6b179242e265c2cbcdb0021d884e20515103"
+            target="_blank"
+            rel="noopener"
             aria-label="Открыть место проведения на Яндекс Картах"
-          >Как добраться</button>
+          >Как добраться</a>
           <a class="hotspot phone-link" href="tel:+79523209036" aria-label="Позвонить организатору по номеру +7 952 320 90 36">
             +7 952 320 90 36
           </a>
@@ -526,36 +495,10 @@
       </section>
     </div>
 
-    <div class="modal" data-map-modal aria-hidden="true">
-      <section class="dialog dialog--map" role="dialog" aria-modal="true" aria-labelledby="map-title">
-        <div class="dialog__top">
-          <div>
-            <h2 id="map-title">Как добраться</h2>
-            <p>Место проведения свадьбы на Яндекс.Картах.</p>
-          </div>
-          <button class="close" type="button" data-close-map aria-label="Закрыть">×</button>
-        </div>
-        <div class="map-widget">
-          <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0c40362726d73194475e91ea009a6b179242e265c2cbcdb0021d884e20515103&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
-        </div>
-        <div class="map-actions">
-          <a
-            class="map-open"
-            href="https://yandex.ru/maps/?um=constructor%3A0c40362726d73194475e91ea009a6b179242e265c2cbcdb0021d884e20515103"
-            target="_blank"
-            rel="noopener"
-          >Открыть карту в новой вкладке</a>
-        </div>
-      </section>
-    </div>
-
     <script>
       const modal = document.querySelector("[data-modal]");
-      const mapModal = document.querySelector("[data-map-modal]");
       const openButton = document.querySelector("[data-open-rsvp]");
       const closeButton = document.querySelector("[data-close-rsvp]");
-      const mapButton = document.querySelector("[data-open-map]");
-      const closeMapButton = document.querySelector("[data-close-map]");
       const scrollDownButton = document.querySelector("[data-scroll-down]");
       const form = document.querySelector("[data-rsvp-form]");
       const note = document.querySelector("[data-form-note]");
@@ -591,20 +534,6 @@
         openButton.focus();
       }
 
-      function openMap() {
-        mapModal.classList.add("is-open");
-        mapModal.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-        closeMapButton.focus();
-      }
-
-      function closeMap() {
-        mapModal.classList.remove("is-open");
-        mapModal.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
-        mapButton.focus();
-      }
-
       scrollDownButton.addEventListener("click", () => {
         window.scrollTo({
           top: Math.round(document.documentElement.scrollHeight * 0.155),
@@ -613,17 +542,11 @@
       });
       openButton.addEventListener("click", openModal);
       closeButton.addEventListener("click", closeModal);
-      mapButton.addEventListener("click", openMap);
-      closeMapButton.addEventListener("click", closeMap);
       modal.addEventListener("click", (event) => {
         if (event.target === modal) closeModal();
       });
-      mapModal.addEventListener("click", (event) => {
-        if (event.target === mapModal) closeMap();
-      });
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && modal.classList.contains("is-open")) closeModal();
-        if (event.key === "Escape" && mapModal.classList.contains("is-open")) closeMap();
       });
 
       form.addEventListener("submit", (event) => {
