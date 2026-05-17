@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f8f6f1" />
+    <meta name="description" content="Свадебное приглашение Руслана и Анастасии. 26 июля 2026." />
+    <title>Руслан & Анастасия | Приглашение</title>
+    <style>
+      :root {
+        --paper: #fbfaf7;
+        --ink: #111;
+        --wine: #972b2a;
+        --shadow: 0 22px 70px rgba(49, 33, 28, 0.16);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: #eee8df;
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 20% 0%, rgba(151, 43, 42, 0.08), transparent 34rem),
+          linear-gradient(90deg, #e9e1d5 0, #f8f6f1 24%, #f8f6f1 76%, #e4dbce 100%);
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      .page-shell {
+        width: min(100%, 440px);
+        margin: 0 auto;
+        padding: clamp(0px, 2.2vw, 28px) clamp(0px, 1.8vw, 18px);
+      }
+
+      .invite {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .invite::before {
+        content: "";
+        display: block;
+        width: 100%;
+        padding-top: 1300.31746%;
+      }
+
+      .invite__image,
+      .hotspots {
+        position: absolute;
+        inset: 0;
+      }
+
+      .invite__image {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: fill;
+        background: url("assets/images/pdf-preview.jpg") center top / cover no-repeat;
+      }
+
+      .hotspot {
+        position: absolute;
+        z-index: 7;
+        display: block;
+        border: 0;
+        border-radius: 2px;
+        background: transparent;
+        color: transparent;
+        cursor: pointer;
+        text-decoration: none;
+        -webkit-tap-highlight-color: rgba(151, 43, 42, 0.25);
+      }
+
+      .hotspot:focus-visible {
+        outline: 2px solid var(--wine);
+        outline-offset: 3px;
+        background: rgba(151, 43, 42, 0.1);
+      }
+
+      .scroll-down {
+        left: 34%;
+        top: 12.15%;
+        width: 32%;
+        height: 0.78%;
+      }
+
+      .map-link {
+        left: 6.5%;
+        top: 31.38%;
+        width: 87%;
+        height: 0.86%;
+      }
+
+      .phone-link {
+        left: 20%;
+        top: 78.35%;
+        width: 60%;
+        height: 2.35%;
+      }
+
+      .contact-link {
+        left: 6.5%;
+        top: 82.64%;
+        width: 87%;
+        height: 0.82%;
+      }
+
+      .rsvp-link {
+        left: 6.5%;
+        top: 94.19%;
+        width: 87%;
+        height: 0.86%;
+      }
+
+      .calendar-heart-mask {
+        position: absolute;
+        left: 19%;
+        top: 17.85%;
+        z-index: 4;
+        width: 62%;
+        height: 5.7%;
+        background: var(--paper);
+        opacity: 1;
+        pointer-events: none;
+        transition: opacity 1400ms ease;
+        will-change: opacity;
+      }
+
+      .calendar-heart-mask.is-visible {
+        opacity: 0;
+      }
+
+      .countdown {
+        position: absolute;
+        left: 8%;
+        top: 70.08%;
+        z-index: 5;
+        width: 84%;
+        opacity: 0;
+        transform: translateY(44px);
+        filter: blur(3px);
+        transition:
+          opacity 900ms ease,
+          filter 900ms ease,
+          transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: opacity, filter, transform;
+      }
+
+      .countdown.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+
+      .countdown__grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.5%;
+        text-align: center;
+      }
+
+      .countdown__grid span {
+        display: block;
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 720ms ease,
+          transform 860ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .countdown.is-visible .countdown__grid span {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .countdown.is-visible .countdown__grid span:nth-child(1) {
+        transition-delay: 90ms;
+      }
+
+      .countdown.is-visible .countdown__grid span:nth-child(2) {
+        transition-delay: 180ms;
+      }
+
+      .countdown.is-visible .countdown__grid span:nth-child(3) {
+        transition-delay: 270ms;
+      }
+
+      .countdown.is-visible .countdown__grid span:nth-child(4) {
+        transition-delay: 360ms;
+      }
+
+      .countdown__value {
+        display: block;
+        color: #050505;
+        font-family: "Bodoni 72", "Bodoni 72 Display", "Didot", "Baskerville", Georgia, serif;
+        font-size: clamp(34px, 11.4vw, 58px);
+        font-weight: 400;
+        font-variant-numeric: lining-nums tabular-nums;
+        font-feature-settings: "lnum" 1, "tnum" 1;
+        letter-spacing: 0;
+        line-height: 0.82;
+        text-rendering: geometricPrecision;
+        text-shadow: 0 0 0 #050505;
+      }
+
+      .countdown__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        background: rgba(18, 14, 12, 0.48);
+      }
+
+      .modal.is-open {
+        display: flex;
+      }
+
+      .dialog {
+        width: min(100%, 430px);
+        max-height: min(88vh, 720px);
+        overflow: auto;
+        background: #fffdf9;
+        border: 1px solid rgba(151, 43, 42, 0.45);
+        box-shadow: 0 18px 70px rgba(0, 0, 0, 0.32);
+        padding: 24px;
+      }
+
+      .dialog--map {
+        width: min(100%, 540px);
+      }
+
+      .dialog__top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .dialog h2 {
+        margin: 0;
+        font-size: 34px;
+        font-weight: 400;
+        line-height: 0.95;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .dialog p {
+        margin: 8px 0 0;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .close {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+        border: 1px solid rgba(151, 43, 42, 0.55);
+        background: #fff;
+        color: var(--wine);
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .form {
+        display: grid;
+        gap: 14px;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .choices {
+        display: grid;
+        gap: 10px;
+      }
+
+      .choice {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Courier New", monospace;
+        font-size: 15px;
+        line-height: 1.2;
+      }
+
+      .choice input {
+        width: 22px;
+        height: 22px;
+        flex: 0 0 22px;
+        accent-color: var(--wine);
+      }
+
+      input[type="text"] {
+        width: 100%;
+        border: 1px solid rgba(17, 17, 17, 0.35);
+        background: #fff;
+        color: var(--ink);
+        font: 16px/1.35 Georgia, "Times New Roman", serif;
+        padding: 12px;
+        border-radius: 0;
+      }
+
+      .submit {
+        width: 100%;
+        border: 0;
+        background: var(--wine);
+        color: #fff;
+        padding: 14px 16px;
+        font: 20px/1 Georgia, "Times New Roman", serif;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .form-note {
+        min-height: 20px;
+        color: var(--wine);
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+      }
+
+      .organizer {
+        display: grid;
+        gap: 8px;
+        border-top: 1px solid rgba(151, 43, 42, 0.25);
+        margin-top: 2px;
+        padding-top: 14px;
+        text-align: center;
+      }
+
+      .organizer__name {
+        font-size: 24px;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .organizer__link {
+        color: var(--wine);
+        font-family: "Courier New", monospace;
+        font-size: 15px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .map-widget {
+        width: 100%;
+        min-height: 320px;
+        overflow: hidden;
+        border: 1px solid rgba(151, 43, 42, 0.35);
+        background: #f4efe8;
+      }
+
+      .map-widget iframe {
+        display: block;
+        width: 100% !important;
+        max-width: 100%;
+      }
+
+      .map-actions {
+        display: grid;
+        gap: 10px;
+        margin-top: 14px;
+        text-align: center;
+      }
+
+      .map-open {
+        color: var(--wine);
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      @media (max-width: 440px) {
+        .page-shell {
+          width: 100%;
+        }
+
+        .invite {
+          box-shadow: none;
+        }
+
+        .dialog {
+          padding: 20px;
+        }
+
+        .dialog h2 {
+          font-size: 30px;
+        }
+
+        .countdown {
+          left: 6%;
+          width: 88%;
+        }
+      }
+
+      @media (min-width: 900px) {
+        .page-shell {
+          width: 430px;
+          padding-top: 32px;
+          padding-bottom: 32px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 1ms !important;
+          animation-duration: 1ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page-shell" aria-label="Свадебное приглашение Руслана и Анастасии">
+      <section class="invite" aria-label="Макет приглашения">
+        <img
+          class="invite__image"
+          src="assets/images/pdf-source.jpg"
+          width="1260"
+          height="16384"
+          alt="Свадебное приглашение Руслана и Анастасии: 26 июля 2026, парк-ресторан Нет на карте, Самарская область, городской округ Кинель, поселок Усть-Кинельский."
+        />
+        <div class="calendar-heart-mask" data-reveal></div>
+        <div class="countdown" data-countdown aria-live="polite">
+          <div class="countdown__grid">
+            <span><b class="countdown__value" data-countdown-days>0</b><small class="countdown__label">Дней</small></span>
+            <span><b class="countdown__value" data-countdown-hours>0</b><small class="countdown__label">Часов</small></span>
+            <span><b class="countdown__value" data-countdown-minutes>0</b><small class="countdown__label">Минут</small></span>
+            <span><b class="countdown__value" data-countdown-seconds>0</b><small class="countdown__label">Секунд</small></span>
+          </div>
+        </div>
+        <div class="hotspots" aria-hidden="false">
+          <button class="hotspot scroll-down" type="button" data-scroll-down aria-label="Листать вниз">Листай вниз</button>
+          <button
+            class="hotspot map-link"
+            type="button"
+            data-open-map
+            aria-label="Открыть место проведения на Яндекс Картах"
+          >Как добраться</button>
+          <a class="hotspot phone-link" href="tel:+79523209036" aria-label="Позвонить организатору по номеру +7 952 320 90 36">
+            +7 952 320 90 36
+          </a>
+          <a
+            class="hotspot contact-link"
+            href="https://wa.me/79523209036"
+            target="_blank"
+            rel="noopener"
+            aria-label="Написать организатору в WhatsApp"
+          >Связаться</a>
+          <button class="hotspot rsvp-link" type="button" data-open-rsvp aria-label="Открыть анкету гостя">Подтвердить</button>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal" data-modal aria-hidden="true">
+      <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="rsvp-title">
+        <div class="dialog__top">
+          <div>
+            <h2 id="rsvp-title">Анкета гостя</h2>
+            <p>Пожалуйста, подтвердите присутствие на свадьбе до 12 июля 2026.</p>
+          </div>
+          <button class="close" type="button" data-close-rsvp aria-label="Закрыть">×</button>
+        </div>
+        <form class="form" data-rsvp-form>
+          <label class="field">
+            Ваше имя и фамилия
+            <input name="name" type="text" autocomplete="name" placeholder="Имя и фамилия" required />
+          </label>
+          <div class="field">
+            Планируете ли вы присутствовать?
+            <div class="choices">
+              <label class="choice">
+                <input type="radio" name="attendance" value="С удовольствием приду" required />
+                <span>С удовольствием приду</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="attendance" value="К сожалению, не смогу" required />
+                <span>К сожалению, не смогу</span>
+              </label>
+            </div>
+          </div>
+          <button class="submit" type="submit">Подтвердить</button>
+          <div class="form-note" role="status" data-form-note></div>
+          <div class="organizer" aria-label="Контакт организатора">
+            <div class="organizer__name">Организатор</div>
+            <a class="organizer__link" href="tel:+79523209036">+7 (952) 320-90-36</a>
+            <a class="organizer__link" href="https://wa.me/79523209036" target="_blank" rel="noopener">Связаться с организатором</a>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div class="modal" data-map-modal aria-hidden="true">
+      <section class="dialog dialog--map" role="dialog" aria-modal="true" aria-labelledby="map-title">
+        <div class="dialog__top">
+          <div>
+            <h2 id="map-title">Как добраться</h2>
+            <p>Место проведения свадьбы на Яндекс.Картах.</p>
+          </div>
+          <button class="close" type="button" data-close-map aria-label="Закрыть">×</button>
+        </div>
+        <div class="map-widget">
+          <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0c40362726d73194475e91ea009a6b179242e265c2cbcdb0021d884e20515103&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+        </div>
+        <div class="map-actions">
+          <a
+            class="map-open"
+            href="https://yandex.ru/maps/?um=constructor%3A0c40362726d73194475e91ea009a6b179242e265c2cbcdb0021d884e20515103"
+            target="_blank"
+            rel="noopener"
+          >Открыть карту в новой вкладке</a>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const modal = document.querySelector("[data-modal]");
+      const mapModal = document.querySelector("[data-map-modal]");
+      const openButton = document.querySelector("[data-open-rsvp]");
+      const closeButton = document.querySelector("[data-close-rsvp]");
+      const mapButton = document.querySelector("[data-open-map]");
+      const closeMapButton = document.querySelector("[data-close-map]");
+      const scrollDownButton = document.querySelector("[data-scroll-down]");
+      const form = document.querySelector("[data-rsvp-form]");
+      const note = document.querySelector("[data-form-note]");
+      const organizerPhone = "79523209036";
+      const weddingDate = new Date("2026-07-26T16:00:00+04:00");
+      const countdownNodes = {
+        days: document.querySelector("[data-countdown-days]"),
+        hours: document.querySelector("[data-countdown-hours]"),
+        minutes: document.querySelector("[data-countdown-minutes]"),
+        seconds: document.querySelector("[data-countdown-seconds]"),
+      };
+
+      function updateCountdown() {
+        const distance = Math.max(0, weddingDate.getTime() - Date.now());
+        const totalSeconds = Math.floor(distance / 1000);
+        countdownNodes.days.textContent = Math.floor(totalSeconds / 86400);
+        countdownNodes.hours.textContent = String(Math.floor((totalSeconds % 86400) / 3600)).padStart(2, "0");
+        countdownNodes.minutes.textContent = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+        countdownNodes.seconds.textContent = String(totalSeconds % 60).padStart(2, "0");
+      }
+
+      function openModal() {
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        setTimeout(() => form.elements.name.focus(), 0);
+      }
+
+      function closeModal() {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        openButton.focus();
+      }
+
+      function openMap() {
+        mapModal.classList.add("is-open");
+        mapModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        closeMapButton.focus();
+      }
+
+      function closeMap() {
+        mapModal.classList.remove("is-open");
+        mapModal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        mapButton.focus();
+      }
+
+      scrollDownButton.addEventListener("click", () => {
+        window.scrollTo({
+          top: Math.round(document.documentElement.scrollHeight * 0.155),
+          behavior: "smooth",
+        });
+      });
+      openButton.addEventListener("click", openModal);
+      closeButton.addEventListener("click", closeModal);
+      mapButton.addEventListener("click", openMap);
+      closeMapButton.addEventListener("click", closeMap);
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) closeModal();
+      });
+      mapModal.addEventListener("click", (event) => {
+        if (event.target === mapModal) closeMap();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && modal.classList.contains("is-open")) closeModal();
+        if (event.key === "Escape" && mapModal.classList.contains("is-open")) closeMap();
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(form));
+        localStorage.setItem("wedding-rsvp", JSON.stringify({ ...data, sentAt: new Date().toISOString() }));
+        const message = ["Анкета гостя", `Имя: ${data.name}`, `Присутствие: ${data.attendance}`].join("\n");
+        note.textContent = "Спасибо! Сейчас откроется WhatsApp для отправки ответа организатору.";
+        window.open(`https://wa.me/${organizerPhone}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+        form.reset();
+      });
+
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("is-visible");
+          });
+        },
+        { threshold: 0.35 }
+      );
+      document.querySelectorAll("[data-reveal], [data-countdown]").forEach((node) => revealObserver.observe(node));
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
