@@ -96,7 +96,7 @@
 
       .map-link {
         left: 6.5%;
-        top: 32.89%;
+        top: 31.89%;
         width: 87%;
         height: 0.42%;
       }
@@ -238,7 +238,7 @@
       }
 
       .dialog {
-        width: min(100%, 430px);
+        width: min(100%, 690px);
         max-height: min(88vh, 720px);
         overflow: auto;
         background: #fffdf9;
@@ -283,89 +283,12 @@
         cursor: pointer;
       }
 
-      .form {
-        display: grid;
-        gap: 14px;
-      }
-
-      .field {
-        display: grid;
-        gap: 8px;
-        font-family: "Courier New", monospace;
-        font-size: 13px;
-        font-weight: 700;
-      }
-
-      .choices {
-        display: grid;
-        gap: 10px;
-      }
-
-      .choice {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-family: "Courier New", monospace;
-        font-size: 15px;
-        line-height: 1.2;
-      }
-
-      .choice input {
-        width: 22px;
-        height: 22px;
-        flex: 0 0 22px;
-        accent-color: var(--wine);
-      }
-
-      input[type="text"] {
+      .yandex-form {
+        display: block;
         width: 100%;
-        border: 1px solid rgba(17, 17, 17, 0.35);
-        background: #fff;
-        color: var(--ink);
-        font: 16px/1.35 Georgia, "Times New Roman", serif;
-        padding: 12px;
-        border-radius: 0;
-      }
-
-      .submit {
-        width: 100%;
+        min-height: 560px;
         border: 0;
-        background: var(--wine);
-        color: #fff;
-        padding: 14px 16px;
-        font: 20px/1 Georgia, "Times New Roman", serif;
-        text-transform: uppercase;
-        cursor: pointer;
-      }
-
-      .form-note {
-        min-height: 20px;
-        color: var(--wine);
-        font-family: "Courier New", monospace;
-        font-size: 13px;
-      }
-
-      .organizer {
-        display: grid;
-        gap: 8px;
-        border-top: 1px solid rgba(151, 43, 42, 0.25);
-        margin-top: 2px;
-        padding-top: 14px;
-        text-align: center;
-      }
-
-      .organizer__name {
-        font-size: 24px;
-        line-height: 1;
-        text-transform: uppercase;
-      }
-
-      .organizer__link {
-        color: var(--wine);
-        font-family: "Courier New", monospace;
-        font-size: 15px;
-        font-weight: 700;
-        text-decoration: none;
+        background: #fff;
       }
 
       @media (max-width: 440px) {
@@ -466,32 +389,15 @@
           </div>
           <button class="close" type="button" data-close-rsvp aria-label="Закрыть">×</button>
         </div>
-        <form class="form" data-rsvp-form>
-          <label class="field">
-            Ваше имя и фамилия
-            <input name="name" type="text" autocomplete="name" placeholder="Имя и фамилия" required />
-          </label>
-          <div class="field">
-            Планируете ли вы присутствовать?
-            <div class="choices">
-              <label class="choice">
-                <input type="radio" name="attendance" value="С удовольствием приду" required />
-                <span>С удовольствием приду</span>
-              </label>
-              <label class="choice">
-                <input type="radio" name="attendance" value="К сожалению, не смогу" required />
-                <span>К сожалению, не смогу</span>
-              </label>
-            </div>
-          </div>
-          <button class="submit" type="submit">Подтвердить</button>
-          <div class="form-note" role="status" data-form-note></div>
-          <div class="organizer" aria-label="Контакт организатора">
-            <div class="organizer__name">Организатор</div>
-            <a class="organizer__link" href="tel:+79523209036">+7 (952) 320-90-36</a>
-            <a class="organizer__link" href="https://t.me/ochkowinx" target="_blank" rel="noopener">Связаться с организатором</a>
-          </div>
-        </form>
+        <script src="https://forms.yandex.ru/_static/embed.js"></script>
+        <iframe
+          class="yandex-form"
+          src="https://forms.yandex.ru/u/6a0b1d6f02848f0a63b8cd18?iframe=1"
+          frameborder="0"
+          name="ya-form-6a0b1d6f02848f0a63b8cd18"
+          width="650"
+          title="Анкета гостя"
+        ></iframe>
       </section>
     </div>
 
@@ -500,9 +406,6 @@
       const openButton = document.querySelector("[data-open-rsvp]");
       const closeButton = document.querySelector("[data-close-rsvp]");
       const scrollDownButton = document.querySelector("[data-scroll-down]");
-      const form = document.querySelector("[data-rsvp-form]");
-      const note = document.querySelector("[data-form-note]");
-      const organizerTelegram = "ochkowinx";
       const weddingDate = new Date("2026-07-26T16:00:00+04:00");
       const countdownNodes = {
         days: document.querySelector("[data-countdown-days]"),
@@ -524,7 +427,7 @@
         modal.classList.add("is-open");
         modal.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
-        setTimeout(() => form.elements.name.focus(), 0);
+        closeButton.focus();
       }
 
       function closeModal() {
@@ -547,16 +450,6 @@
       });
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && modal.classList.contains("is-open")) closeModal();
-      });
-
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const data = Object.fromEntries(new FormData(form));
-        localStorage.setItem("wedding-rsvp", JSON.stringify({ ...data, sentAt: new Date().toISOString() }));
-        const message = ["Анкета гостя", `Имя: ${data.name}`, `Присутствие: ${data.attendance}`].join("\n");
-        note.textContent = "Спасибо! Сейчас откроется Telegram для отправки ответа организатору.";
-        window.open(`https://t.me/${organizerTelegram}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
-        form.reset();
       });
 
       const revealObserver = new IntersectionObserver(
