@@ -98,7 +98,7 @@
         left: 6.5%;
         top: 33.00%;
         width: 87%;
-        height: 0.42%;
+        height: 0.46%;
       }
 
       .phone-link {
@@ -138,6 +138,51 @@
 
       .calendar-heart-mask.is-visible {
         opacity: 0;
+      }
+
+      .guest-title-mask {
+        position: absolute;
+        left: 0;
+        top: 11.05%;
+        z-index: 4;
+        width: 100%;
+        height: 1.62%;
+        background: #fff;
+        pointer-events: none;
+      }
+
+      .guest-title {
+        position: absolute;
+        left: 0;
+        top: 11.33%;
+        z-index: 5;
+        width: 100%;
+        margin: 0;
+        color: #050505;
+        font-family: "Bodoni 72", "Bodoni 72 Display", "Didot", "Baskerville", Georgia, serif;
+        font-size: clamp(28px, 8.45vw, 37px);
+        font-weight: 400;
+        line-height: 1.05;
+        letter-spacing: 0;
+        text-align: center;
+        text-transform: uppercase;
+        text-rendering: geometricPrecision;
+        pointer-events: none;
+      }
+
+      .guest-title.is-long {
+        font-size: clamp(24px, 7.35vw, 32px);
+        line-height: 1.06;
+      }
+
+      .guest-title.is-very-long {
+        font-size: clamp(21px, 6.4vw, 28px);
+        line-height: 1.1;
+      }
+
+      .guest-title__line {
+        display: block;
+        white-space: nowrap;
       }
 
       .countdown {
@@ -347,6 +392,11 @@
           height="16384"
           alt="Свадебное приглашение Руслана и Анастасии: 26 июля 2026, парк-ресторан Нет на карте, Самарская область, городской округ Кинель, поселок Усть-Кинельский."
         />
+        <div class="guest-title-mask" aria-hidden="true"></div>
+        <h2 class="guest-title" data-guest-title>
+          <span class="guest-title__line">Дорогие</span>
+          <span class="guest-title__line">родные и близкие!</span>
+        </h2>
         <div class="calendar-heart-mask" data-reveal></div>
         <div class="countdown" data-countdown aria-live="polite">
           <div class="countdown__grid">
@@ -370,7 +420,7 @@
           </a>
           <a
             class="hotspot contact-link"
-            href="https://t.me/radio_antonova"
+            href="https://t.me/ochkowinx"
             target="_blank"
             rel="noopener"
             aria-label="Написать организатору в Telegram"
@@ -406,6 +456,7 @@
       const openButton = document.querySelector("[data-open-rsvp]");
       const closeButton = document.querySelector("[data-close-rsvp]");
       const scrollDownButton = document.querySelector("[data-scroll-down]");
+      const guestTitle = document.querySelector("[data-guest-title]");
       const weddingDate = new Date("2026-07-26T16:00:00+04:00");
       const countdownNodes = {
         days: document.querySelector("[data-countdown-days]"),
@@ -413,6 +464,25 @@
         minutes: document.querySelector("[data-countdown-minutes]"),
         seconds: document.querySelector("[data-countdown-seconds]"),
       };
+
+      function setGuestTitle() {
+        const params = new URLSearchParams(window.location.search);
+        const guest = (params.get("guest") || params.get("name") || "").trim();
+        const text = guest ? `Дорогие\n${guest}!` : "Дорогие\nродные и близкие!";
+        guestTitle.innerHTML = text
+          .split("\n")
+          .map((line) => line.replace(/[&<>"']/g, (char) => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[char])))
+          .map((line) => `<span class="guest-title__line">${line}</span>`)
+          .join("");
+        guestTitle.classList.toggle("is-long", text.length > 32);
+        guestTitle.classList.toggle("is-very-long", text.length > 46);
+      }
 
       function updateCountdown() {
         const distance = Math.max(0, weddingDate.getTime() - Date.now());
@@ -463,6 +533,7 @@
       document.querySelectorAll("[data-reveal], [data-countdown]").forEach((node) => revealObserver.observe(node));
 
       updateCountdown();
+      setGuestTitle();
       setInterval(updateCountdown, 1000);
     </script>
   </body>
