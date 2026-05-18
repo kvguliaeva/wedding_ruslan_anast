@@ -468,7 +468,19 @@
       function setGuestTitle() {
         const params = new URLSearchParams(window.location.search);
         const guest = (params.get("guest") || params.get("name") || "").trim();
-        const text = guest ? `Дорогие\n${guest}!` : "Дорогие\nродные и близкие!";
+        const appealParam = (params.get("appeal") || "").trim();
+        const gender = (params.get("gender") || "").trim().toLowerCase();
+        let appeal = appealParam || "Дорогие";
+
+        if (!appealParam && ["m", "male", "man"].includes(gender)) {
+          appeal = "Дорогой";
+        }
+
+        if (!appealParam && ["f", "female", "woman"].includes(gender)) {
+          appeal = "Дорогая";
+        }
+
+        const text = guest ? `${appeal}\n${guest}!` : "Дорогие\nродные и близкие!";
         const longestLine = Math.max(...text.split("\n").map((line) => line.length));
         guestTitle.innerHTML = text
           .split("\n")
